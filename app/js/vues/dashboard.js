@@ -214,8 +214,7 @@ export function rendre(conteneur) {
     h('div', { class: 'titre-vue' }, h('h1', {}, 'Dashboard'), h('span', { class: 'sous-titre' }, 'Tout est mesuré en R.')),
     barre,
     zone);
-  const revue = blocRevueHebdo();
-  if (revue) conteneur.append(revue);
+  conteneur.append(h('div', { style: { marginTop: '14px' } }, blocRevueHebdo()));
   rendreBarre();
   rendreStats(zone, f);
 }

@@ -117,3 +117,38 @@ test('occurrences par setup en backtest : pris + non pris, futur vu à part', as
   assert.equal(j.campagnes.length, 1);
   assert.equal(j.trades.filter((t) => t.campagneId === null).length, 3);
 });
+
+test('calendrier : résultat et état de discipline par jour', async () => {
+  const { resumeParJour } = await import('../../app/js/domaine.js');
+  const { versUtc } = await import('../../app/js/temps.js');
+  const j = journalVide(FZ);
+  const p = j.parametres;
+  const regles = p.regles.map((r) => r.id);
+  const trade = (date, r, conforme, partie = 'reel') => {
+    const t = nouveauTrade({ partie });
+    t.entreeLe = versUtc(date, '15:45', FZ);
+    t.creeLe = versUtc('2026-10-20', '10:00', FZ);
+    t.resultatRManuel = r;
+    for (const id of regles) t.discipline[id] = true;
+    if (!conforme) t.discipline[regles[0]] = false;
+    j.trades.push(t);
+  };
+  trade('2026-10-12', 2, true); trade('2026-10-12', -1, true);
+  trade('2026-10-13', 1, true); trade('2026-10-13', -1, false);
+  trade('2026-10-14', -1, false);
+  const s = nouvelleSession({ partie: 'reel', date: '2026-10-15' });
+  s.checkin.decision = 'pas_trade';
+  j.sessions.push(s);
+  trade('2024-03-05', 3, true, 'backtest'); // backtest : rattaché au jour du replay (20/10)
+  const jours = resumeParJour(j, 'reel', p);
+  assert.deepEqual([...jours.keys()].sort(), ['2026-10-12', '2026-10-13', '2026-10-14', '2026-10-15']);
+  assert.equal(jours.get('2026-10-12').totalR, 1);
+  assert.equal(jours.get('2026-10-12').etat, 'conforme');
+  assert.equal(jours.get('2026-10-13').etat, 'partiel');
+  assert.equal(jours.get('2026-10-13').score, 0.5);
+  assert.equal(jours.get('2026-10-14').etat, 'non_conforme');
+  assert.equal(jours.get('2026-10-15').etat, 'victoire');
+  assert.equal(jours.get('2026-10-15').totalR, null);
+  const bt = resumeParJour(j, 'backtest', p);
+  assert.deepEqual([...bt.keys()], ['2026-10-20']);
+});

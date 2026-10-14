@@ -462,3 +462,45 @@ fieldset.formulaire:disabled .zone-image-barre .btn-icone { pointer-events: none
 .jauge.perte > span { background: var(--perte); }
 .import-apercu { max-height: 52vh; overflow: auto; }
 .import-apercu select.entree { min-width: 140px; padding: 4px 6px; min-height: 30px; }
+
+/* --- Calendrier --- */
+.calendrier-tete { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.calendrier-titre { font-size: 15px; min-width: 140px; text-align: center; }
+.calendrier { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
+.jour-entete { font-size: 11px; color: var(--texte-3); text-transform: uppercase; letter-spacing: 0.05em; padding: 0 4px 2px; }
+.jour {
+  position: relative; min-height: 68px; padding: 5px 6px;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 1px;
+  background: var(--surface-2); border: 1px solid var(--bordure); border-left-width: 3px;
+  border-radius: var(--rayon); color: var(--texte); font: inherit; text-align: left;
+}
+.jour.cliquable { cursor: pointer; }
+.jour.cliquable:hover { border-color: var(--bordure-forte); }
+.jour.hors-mois { opacity: 0.35; }
+.jour.aujourdhui .jour-num { color: var(--accent-fort); font-weight: 700; }
+.jour-num { font-family: var(--police-mono); font-size: 12px; color: var(--texte-2); }
+.jour-icone { position: absolute; top: 4px; right: 6px; font-size: 12px; font-weight: 700; }
+.jour-r { font-size: 13px; font-weight: 600; margin-top: auto; }
+.jour-nb { font-size: 11px; color: var(--texte-3); }
+.jour.conforme, .jour.victoire { border-left-color: var(--gain); background: var(--gain-doux); }
+.jour.partiel { border-left-color: var(--alerte); background: var(--alerte-doux); }
+.jour.non-conforme { border-left-color: var(--perte); background: var(--perte-doux); }
+.jour.conforme .jour-icone, .jour.victoire .jour-icone { color: var(--gain); }
+.jour.partiel .jour-icone { color: var(--alerte); }
+.jour.non-conforme .jour-icone { color: var(--perte); }
+.legende { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 10px; font-size: 12px; color: var(--texte-2); }
+.legende-item { display: inline-flex; align-items: center; gap: 6px; }
+.pastille { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; border-radius: var(--rayon); font-size: 11px; font-weight: 700; }
+.pastille.conforme, .pastille.victoire { background: var(--gain-doux); color: var(--gain); }
+.pastille.partiel { background: var(--alerte-doux); color: var(--alerte); }
+.pastille.non-conforme { background: var(--perte-doux); color: var(--perte); }
+@media (max-width: 640px) {
+  .jour { min-height: 54px; padding: 4px; }
+  .jour-r { font-size: 11px; }
+  .jour-nb { display: none; }
+}
+
+/* --- Revue hebdomadaire --- */
+.revue-chiffres { display: flex; flex-wrap: wrap; gap: 8px 22px; padding: 10px 12px; background: var(--surface-2); border-radius: var(--rayon); }
+.revue-chiffre { display: flex; flex-direction: column; gap: 2px; }
+.revue-chiffre .mono { font-size: 16px; font-weight: 600; }

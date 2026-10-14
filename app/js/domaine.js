@@ -129,3 +129,40 @@ export function supprimerCampagne(journal, campagneId) {
     for (const x of liste) if (x.campagneId === campagneId) x.campagneId = null;
   }
 }
+
+/**
+ * Résumé par jour pour le calendrier : trades rattachés à la date (réel : date du trade ;
+ * backtest : date réelle du replay), R total et état de discipline.
+ * etat : 'victoire' (« je ne trade pas » respecté), 'conforme' (100 %), 'partiel', 'non_conforme', ou null.
+ */
+export function resumeParJour(journal, partie, p) {
+  const jours = new Map();
+  const jour = (date) => {
+    if (!jours.has(date)) jours.set(date, { date, trades: [], sessions: [] });
+    return jours.get(date);
+  };
+  for (const s of journal.sessions) if (s.partie === partie) jour(s.date).sessions.push(s);
+  for (const t of journal.trades) {
+    if (t.partie !== partie) continue;
+    const date = dateDeRattachement(t, p.fuseauSaisie);
+    if (date) jour(date).trades.push(t);
+  }
+  for (const j of jours.values()) {
+    const rs = j.trades.map((t) => valeurR(t, p)).filter((r) => r != null);
+    j.totalR = rs.length ? rs.reduce((a, b) => a + b, 0) : null;
+    let conformes = 0;
+    let evalues = 0;
+    for (const t of j.trades) {
+      const { statut } = etatDiscipline(t, p);
+      if (statut === 'conforme') { conformes += 1; evalues += 1; } else if (statut === 'non_conforme') evalues += 1;
+    }
+    const pasTrade = j.sessions.some((s) => s.checkin?.decision === 'pas_trade');
+    if (pasTrade && j.trades.length) j.etat = 'non_conforme';
+    else if (pasTrade) j.etat = 'victoire';
+    else if (!evalues) j.etat = null;
+    else if (conformes === evalues) j.etat = 'conforme';
+    else j.etat = conformes ? 'partiel' : 'non_conforme';
+    j.score = pasTrade ? (j.trades.length ? 0 : 1) : evalues ? conformes / evalues : null;
+  }
+  return jours;
+}
