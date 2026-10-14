@@ -348,7 +348,7 @@ table.tableau { width: 100%; border-collapse: collapse; font-size: 13px; }
   box-shadow: var(--ombre);
   padding: 20px;
 }
-.modale.large { width: min(860px, 100%); }
+.modale.large { width: min(1180px, 100%); }
 .modale h2 { margin-bottom: 12px; }
 .modale-contenu { display: flex; flex-direction: column; gap: 10px; }
 .modale-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 18px; }
@@ -460,3 +460,5 @@ fieldset.formulaire:disabled .zone-image-barre .btn-icone { pointer-events: none
 .jauge.gain > span { background: var(--gain); }
 .jauge.alerte > span { background: var(--alerte); }
 .jauge.perte > span { background: var(--perte); }
+.import-apercu { max-height: 52vh; overflow: auto; }
+.import-apercu select.entree { min-width: 140px; padding: 4px 6px; min-height: 30px; }
