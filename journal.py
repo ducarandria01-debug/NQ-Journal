@@ -47,9 +47,12 @@ SIGNATURES_IMAGES = {
     "webp": [b"RIFF"],
 }
 
-mimetypes.add_type("text/javascript", ".js")
-mimetypes.add_type("font/woff2", ".woff2")
-mimetypes.add_type("image/webp", ".webp")
+# Types forcés : sous Windows, le registre peut associer .js ou .css à text/plain,
+# ce qui empêcherait le navigateur de charger l'interface.
+for _type, _ext in (("text/javascript", ".js"), ("text/css", ".css"), ("text/html", ".html"),
+                    ("image/svg+xml", ".svg"), ("font/woff2", ".woff2"), ("image/webp", ".webp"),
+                    ("image/png", ".png"), ("image/jpeg", ".jpg"), ("image/gif", ".gif")):
+    mimetypes.add_type(_type, _ext)
 
 
 def maintenant_iso():

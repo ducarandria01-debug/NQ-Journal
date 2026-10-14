@@ -44,7 +44,7 @@ export function creerTrade(partie, { sessionId = null, plan = null, ouvrir = tru
   if (plan) appliquerPlan(t, plan);
   if (sessionId) {
     t.sessionId = sessionId;
-  } else if (partie === 'reel' || partie === 'backtest') {
+  } else {
     t.sessionId = sessionPourTrade(store.journal, t, p.fuseauSaisie)?.id || null;
   }
   if (partie === 'backtest') {

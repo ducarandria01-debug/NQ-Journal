@@ -136,7 +136,6 @@ function galeriePhotos(session) {
 }
 
 function rendreFiche(conteneur, s) {
-  const p = store.p;
   const autres = sessionsDu(store.journal, s.partie, s.date).filter((x) => x.id !== s.id);
   const enTete = h('div', {});
   const rendreEnTete = () => monter(enTete,

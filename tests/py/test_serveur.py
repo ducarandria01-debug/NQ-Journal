@@ -267,5 +267,20 @@ class TestExportImport(BaseServeur):
         self.assertEqual(analyse["apercu"]["imagesManquantes"], ["images/2026-01/x.png"])
 
 
+
+class TestLancement(BaseServeur):
+    def test_detecte_un_journal_deja_lance(self):
+        self.assertTrue(serveur.journal_deja_lance(self.port))
+        self.assertFalse(serveur.port_libre(self.port))
+
+    def test_second_lancement_ne_demarre_pas_un_autre_serveur(self):
+        import contextlib
+        sortie = io.StringIO()
+        with contextlib.redirect_stdout(sortie):
+            code = serveur.main(["--port", str(self.port), "--donnees", self.dossier, "--sans-navigateur"])
+        self.assertEqual(code, 0)
+        self.assertIn("tourne déjà", sortie.getvalue())
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -10,7 +10,7 @@ import {
 import {
   rrPrevu, rrRealise, resultatR, SOURCES_R, duree, etatDiscipline, suggestionsDiscipline, appliquerSuggestions, valeurR,
 } from '../calculs.js';
-import { trouverParId, aCheckin } from '../domaine.js';
+import { trouverParId } from '../domaine.js';
 import {
   depuisUtc, versUtc, killzoneDe, formaterDuree, dateCourte, FUSEAU_NY,
 } from '../temps.js';
@@ -117,7 +117,9 @@ export function rendreFicheTrade(conteneur, t) {
     monter(discipline,
       h('div', { class: 'ligne' },
         tagDiscipline(t, p),
-        h('span', { class: 'discret' }, etat.statut === 'incomplet' ? `${etat.manquantes.length} règle(s) à renseigner` : ''),
+        h('span', { class: 'mono' }, `${etat.total - etat.violees.length - etat.manquantes.length}/${etat.total}`),
+        h('span', { class: 'discret' }, etat.statut === 'incomplet'
+          ? `règles respectées · ${etat.manquantes.length} à renseigner` : 'règles respectées'),
         h('span', { class: 'espace' }),
         nbSugg ? bouton(`Appliquer les ${nbSugg} suggestion(s)`, () => { appliquerSuggestions(j, t, p); tout(); }, { classe: 'petit' }) : null),
       regles.map((r) => {

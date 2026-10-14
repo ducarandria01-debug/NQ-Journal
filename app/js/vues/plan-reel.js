@@ -8,7 +8,7 @@ import { DIRECTIONS, QUALITES, STATUTS_PLAN, elementsActifs, nomDe } from '../mo
 import { rrPrevu, valeurR, signe } from '../calculs.js';
 import { trouverParId } from '../domaine.js';
 import { depuisUtc, dateLongue, dateCourte } from '../temps.js';
-import { fmtR, fmtRatio, fmtNombre, classeSigne } from '../format.js';
+import { fmtR, fmtRatio, fmtNombre } from '../format.js';
 import { naviguer } from '../navigation.js';
 import { creerTrade, appliquerPlan, routeTrade } from '../actions.js';
 import { libelleZone, optionsSessions } from './composants-trade.js';
