@@ -94,3 +94,38 @@ export function resultatSession(journal, session, p) {
   }
   return total;
 }
+
+/**
+ * Compteur d'occurrences par setup en backtest : trades pris + setups présents non pris.
+ * `campagneId` null = toutes les campagnes. Les trades « futur vu » sont comptés à part.
+ */
+export function occurrencesParSetup(journal, campagneId = null) {
+  const parSetup = new Map();
+  const ligne = (id) => {
+    if (!parSetup.has(id)) parSetup.set(id, { setupId: id, pris: 0, nonPris: 0, futurVu: 0, total: 0 });
+    return parSetup.get(id);
+  };
+  const garder = (x) => campagneId == null || x.campagneId === campagneId;
+  for (const t of journal.trades) {
+    if (t.partie !== 'backtest' || !garder(t)) continue;
+    const l = ligne(t.setupId || null);
+    l.pris += 1;
+    l.total += 1;
+    if (t.regardeFutur) l.futurVu += 1;
+  }
+  for (const s of journal.setupsNonPris) {
+    if (!garder(s)) continue;
+    const l = ligne(s.setupId || null);
+    l.nonPris += 1;
+    l.total += 1;
+  }
+  return [...parSetup.values()].sort((a, b) => b.total - a.total);
+}
+
+/** Supprime une campagne : ses trades, sessions et setups non pris sont conservés, sans campagne. */
+export function supprimerCampagne(journal, campagneId) {
+  journal.campagnes = journal.campagnes.filter((c) => c.id !== campagneId);
+  for (const liste of [journal.trades, journal.sessions, journal.setupsNonPris]) {
+    for (const x of liste) if (x.campagneId === campagneId) x.campagneId = null;
+  }
+}

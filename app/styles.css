@@ -398,3 +398,17 @@ fieldset.formulaire:disabled .zone-image-barre .btn-icone { pointer-events: none
 .plan-attente { padding: 6px 0; border-bottom: 1px solid var(--bordure); }
 .plan-attente:last-child { border-bottom: none; }
 .oui-non .seg { min-width: 48px; }
+
+/* --- Backtest --- */
+.campagnes { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; }
+.campagne {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 2px; text-align: left;
+  background: var(--surface-2); color: var(--texte);
+  border: 1px solid var(--bordure); border-radius: var(--rayon);
+  padding: 9px 12px; font: inherit; cursor: pointer;
+}
+.campagne:hover { border-color: var(--bordure-forte); }
+.campagne.actif { border-color: var(--accent); background: var(--accent-doux); }
+.campagne-nom { font-weight: 600; }
+.campagne .discret { font-size: 12px; }
+.regles-test { white-space: pre-wrap; margin: 0; }

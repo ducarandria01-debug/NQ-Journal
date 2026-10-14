@@ -91,3 +91,29 @@ test('supprimer une session garde ses trades, devenus « sans check-in »', () =
   assert.equal(j.trades[0].sessionId, null);
   assert.equal(aCheckin(null), false);
 });
+
+test('occurrences par setup en backtest : pris + non pris, futur vu à part', async () => {
+  const { occurrencesParSetup, supprimerCampagne } = await import('../../app/js/domaine.js');
+  const { nouveauSetupNonPris, nouvelleCampagne } = await import('../../app/js/modele.js');
+  const j = journalVide(FZ);
+  const c1 = nouvelleCampagne();
+  const c2 = nouvelleCampagne();
+  j.campagnes.push(c1, c2);
+  const bt = (setupId, campagneId, futur = false) => {
+    const t = nouveauTrade({ partie: 'backtest' });
+    Object.assign(t, { setupId, campagneId, regardeFutur: futur });
+    j.trades.push(t);
+  };
+  bt('sb', c1.id); bt('sb', c1.id, true); bt('j', c2.id);
+  j.trades.push(Object.assign(nouveauTrade({ partie: 'reel' }), { setupId: 'sb' })); // réel : ignoré
+  j.setupsNonPris.push(Object.assign(nouveauSetupNonPris({ campagneId: c1.id }), { setupId: 'sb' }));
+  j.setupsNonPris.push(Object.assign(nouveauSetupNonPris({ campagneId: c1.id }), { setupId: 'j' }));
+  assert.deepEqual(occurrencesParSetup(j, c1.id), [
+    { setupId: 'sb', pris: 2, nonPris: 1, futurVu: 1, total: 3 },
+    { setupId: 'j', pris: 0, nonPris: 1, futurVu: 0, total: 1 },
+  ]);
+  assert.equal(occurrencesParSetup(j).find((l) => l.setupId === 'j').total, 2);
+  supprimerCampagne(j, c1.id);
+  assert.equal(j.campagnes.length, 1);
+  assert.equal(j.trades.filter((t) => t.campagneId === null).length, 3);
+});
