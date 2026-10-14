@@ -381,3 +381,20 @@ table.tableau { width: 100%; border-collapse: collapse; font-size: 13px; }
 .galerie { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
 .galerie .photo { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
 .segment.echelle .seg { min-width: 38px; font-family: var(--police-mono); }
+
+/* --- Fiche trade --- */
+fieldset.formulaire { border: none; margin: 0; padding: 0; min-width: 0; }
+fieldset.formulaire:disabled .zone-image-vide,
+fieldset.formulaire:disabled .zone-image-barre .btn-icone { pointer-events: none; opacity: 0.5; }
+.checklist { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 16px; }
+.checklist-item { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 4px 0; border-bottom: 1px solid var(--bordure); }
+@media (max-width: 640px) { .checklist { grid-template-columns: minmax(0, 1fr); } }
+.regle { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 12px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--bordure); }
+.regle:last-child { border-bottom: none; }
+.regle-texte { display: flex; flex-direction: column; gap: 2px; }
+.regle-texte .suggestion { font-size: 12px; }
+.regle-raison { grid-column: 1 / -1; max-width: 320px; }
+.regle.casse .regle-texte > span:first-child { color: var(--perte); }
+.plan-attente { padding: 6px 0; border-bottom: 1px solid var(--bordure); }
+.plan-attente:last-child { border-bottom: none; }
+.oui-non .seg { min-width: 48px; }

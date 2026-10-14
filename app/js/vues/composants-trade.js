@@ -65,3 +65,13 @@ export function tableauTrades(trades, { p = store.p, vide: texteVide = 'Aucun tr
           h('td', {}, h('div', { class: 'ligne', style: { gap: '4px', flexWrap: 'nowrap' } }, tagsStatut(t))));
       }))));
 }
+
+/** Liste des sessions proposées pour rattacher un trade. */
+export function optionsSessions(partie, idCourant) {
+  return store.journal.sessions
+    .filter((s) => s.partie === partie)
+    .sort((a, b) => b.date.localeCompare(a.date) || b.numero - a.numero)
+    .filter((s, i) => i < 90 || s.id === idCourant)
+    .map((s) => ({ id: s.id, nom: `${dateCourte(s.date)} · session ${s.numero}${aCheckin(s) ? '' : ' (sans check-in)'}` }));
+}
+
