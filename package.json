@@ -5,6 +5,10 @@
   "description": "Journal de trading local (NAS100, ICT).",
   "scripts": {
     "test": "node --test \"tests/js/*.test.js\" && python3 -m unittest discover -s tests/py",
-    "test:e2e": "node --test --test-concurrency=1 \"tests/e2e/*.test.js\""
+    "test:e2e": "node --test --test-concurrency=1 \"tests/e2e/*.test.js\"",
+    "build:test": "node outils/construire-fichier-test.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "0.24.0"
   }
 }

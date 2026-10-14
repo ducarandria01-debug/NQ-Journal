@@ -25,6 +25,15 @@ En ligne de commande : `python3 journal.py` (options : `--port 8765`, `--donnees
 
 ---
 
+### Juste pour essayer : le fichier de test
+
+`NQ-Journal-test.html` est une version autonome à ouvrir d'un double-clic, sans Python. C'est un **mode test** :
+le journal est gardé dans le navigateur et les images sont perdues à la fermeture de l'onglet. L'export donne un
+JSON sans images, et le réimport n'est pas disponible. Pour ton vrai journal, utilise « Lancer le journal ».
+(Pour le reconstruire : `npm install && npm run build:test`, le fichier sort dans `dist/`.)
+
+---
+
 ## 2. Tes données
 
 Tout est dans le dossier `donnees/` à côté de `journal.py` (jamais envoyé sur Internet, jamais dans Git) :

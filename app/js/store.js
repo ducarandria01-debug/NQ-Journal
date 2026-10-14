@@ -168,4 +168,8 @@ class Store {
 
 export const store = new Store();
 
-export const urlImage = (chemin) => (chemin ? `/donnees/${chemin}` : '');
+// En mode test (fichier HTML autonome), les images vivent en mémoire : le mode test fournit leur adresse.
+export const urlImage = (chemin) => {
+  if (!chemin) return '';
+  return globalThis.NQJ_TEST ? globalThis.NQJ_TEST.urlImage(chemin) : `/donnees/${chemin}`;
+};

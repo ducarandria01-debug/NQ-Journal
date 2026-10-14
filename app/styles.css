@@ -513,3 +513,9 @@ fieldset.formulaire:disabled .zone-image-barre .btn-icone { pointer-events: none
   .onglets a { padding: 0 10px; }
   .statut-enregistrement { max-width: 90px; overflow: hidden; text-overflow: ellipsis; }
 }
+
+/* --- Mode test (fichier HTML autonome) --- */
+.bandeau-test {
+  padding: 6px 20px; font-size: 12px; text-align: center;
+  background: var(--accent); color: var(--sur-accent); font-weight: 600;
+}

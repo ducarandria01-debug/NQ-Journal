@@ -6,6 +6,12 @@ import { dateLongue } from './temps.js';
 
 export async function lancerExport() {
   await store.enregistrerMaintenant();
+  if (globalThis.NQJ_TEST) {
+    globalThis.NQJ_TEST.exporter(store.journal);
+    notifier('Mode test : le journal (sans les images) est téléchargé en JSON.', 'succes');
+    setTimeout(() => store.rafraichirEtat(), 300);
+    return;
+  }
   const lien = h('a', { href: '/api/export', download: '' });
   document.body.append(lien);
   lien.click();
