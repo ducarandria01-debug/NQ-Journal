@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="fr" data-theme="sombre">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NQ Journal</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%23b0773f'/%3E%3Cpath d='M8 22V10l8 12V10m4 12h4' stroke='%231c1714' stroke-width='3' fill='none'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="entete">
+    <div class="marque">NQ <span>Journal</span></div>
+    <nav class="onglets" aria-label="Navigation principale">
+      <a href="#/dashboard" data-onglet="dashboard">Dashboard</a>
+      <a href="#/backtest" data-onglet="backtest">Backtest</a>
+      <a href="#/trades" data-onglet="trades">Trades</a>
+      <a href="#/sessions" data-onglet="sessions">Check-in de session</a>
+    </nav>
+    <div class="entete-outils">
+      <span class="statut-enregistrement" id="statut" aria-live="polite"></span>
+      <button type="button" class="btn-icone" id="bouton-theme" title="Mode clair / sombre">◐</button>
+      <a href="#/parametres" class="btn-icone" data-onglet="parametres" title="Paramètres et sauvegardes">⚙</a>
+    </div>
+  </header>
+  <div id="bandeau"></div>
+  <main id="vue" class="vue"><p class="chargement">Chargement du journal…</p></main>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

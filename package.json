@@ -1,0 +1,10 @@
+{
+  "name": "nq-journal",
+  "private": true,
+  "type": "module",
+  "description": "Journal de trading local (NAS100, ICT).",
+  "scripts": {
+    "test": "node --test "tests/js/*.test.js" && python3 -m unittest discover -s tests/py -v",
+    "test:e2e": "node --test "tests/e2e/*.test.js""
+  }
+}

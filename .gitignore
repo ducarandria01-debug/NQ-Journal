@@ -1,0 +1,7 @@
+# Données personnelles du journal : jamais dans Git
+donnees/
+__pycache__/
+*.pyc
+node_modules/
+.DS_Store
+test-results/
