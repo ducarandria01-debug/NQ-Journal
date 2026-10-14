@@ -38,10 +38,11 @@
   --accent-fort: #d9a467;
   --accent-doux: rgba(193, 139, 82, 0.14);
   --sur-accent: #1b1410;
-  --gain: #79b486;
-  --gain-doux: rgba(121, 180, 134, 0.14);
-  --perte: #d9705f;
-  --perte-doux: rgba(217, 112, 95, 0.14);
+  /* Gain / perte : paire bleu-sarcelle / orange-rouge validée pour le daltonisme (pas de vert/rouge). */
+  --gain: #1fa0b8;
+  --gain-doux: rgba(31, 160, 184, 0.15);
+  --perte: #d9673d;
+  --perte-doux: rgba(217, 103, 61, 0.15);
   --alerte: #d9ad55;
   --alerte-doux: rgba(217, 173, 85, 0.13);
   --ombre: 0 8px 28px rgba(0, 0, 0, 0.45);
@@ -62,10 +63,10 @@
   --accent-fort: #83521f;
   --accent-doux: rgba(155, 100, 46, 0.11);
   --sur-accent: #fffaf4;
-  --gain: #3c7c4b;
-  --gain-doux: rgba(60, 124, 75, 0.1);
-  --perte: #b34536;
-  --perte-doux: rgba(179, 69, 54, 0.09);
+  --gain: #0f7fa0;
+  --gain-doux: rgba(15, 127, 160, 0.1);
+  --perte: #c4502a;
+  --perte-doux: rgba(196, 80, 42, 0.1);
   --alerte: #a87515;
   --alerte-doux: rgba(168, 117, 21, 0.1);
   --ombre: 0 8px 28px rgba(60, 40, 20, 0.18);
@@ -412,3 +413,50 @@ fieldset.formulaire:disabled .zone-image-barre .btn-icone { pointer-events: none
 .campagne-nom { font-weight: 600; }
 .campagne .discret { font-size: 12px; }
 .regles-test { white-space: pre-wrap; margin: 0; }
+
+/* --- Dashboard --- */
+.barre-filtres { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 16px; }
+.barre-filtres .filtre { width: 190px; }
+.barre-filtres .filtre-date { width: 150px; }
+.grille-tuiles { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+.grille-2-1 { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); }
+@media (max-width: 900px) { .grille-2-1 { grid-template-columns: minmax(0, 1fr); } }
+.titre-section { margin: 10px 0 0; font-size: 15px; color: var(--texte-2); }
+.tableau.compact th, .tableau.compact td { padding: 6px 9px; }
+.tableau tr.faible td { color: var(--texte-3); }
+.col-barre { width: 26%; min-width: 90px; }
+.pile-serree { display: flex; flex-direction: column; gap: 6px; }
+.ligne-entre { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+
+.graphique { position: relative; }
+.graphique-cible { position: relative; outline: none; touch-action: pan-y; }
+.graphique-cible:focus-visible { box-shadow: 0 0 0 1px var(--accent); border-radius: var(--rayon); }
+.svg-courbe { width: 100%; height: auto; display: block; overflow: visible; }
+.svg-courbe .grille { stroke: var(--bordure); stroke-width: 1; }
+.svg-courbe .axe-zero { stroke: var(--bordure-forte); stroke-width: 1; }
+.svg-courbe .tick { fill: var(--texte-3); font-family: var(--police-mono); font-size: 11px; }
+.svg-courbe .trace { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.svg-courbe .aire { fill: var(--accent); opacity: 0.1; }
+.svg-courbe .point-fin, .svg-courbe .repere { fill: var(--accent); stroke: var(--surface); stroke-width: 2; }
+.svg-courbe .reticule { stroke: var(--texte-3); stroke-width: 1; }
+.bulle {
+  position: absolute; top: 8px; pointer-events: none; min-width: 150px;
+  background: var(--surface-3); border: 1px solid var(--bordure-forte); border-radius: var(--rayon);
+  padding: 7px 10px; box-shadow: var(--ombre); font-size: 12px;
+}
+.bulle-valeur { font-size: 15px; font-weight: 600; color: var(--texte); }
+.bulle-ligne { display: flex; align-items: center; gap: 6px; color: var(--texte-2); }
+.bulle-detail { color: var(--texte-3); }
+.cle-ligne { display: inline-block; width: 12px; height: 2px; background: var(--accent); border-radius: 1px; }
+
+.barre-div { position: relative; height: 10px; }
+.barre-div-zero { position: absolute; left: 50%; top: -3px; bottom: -3px; width: 1px; background: var(--bordure-forte); }
+.barre-div-val { position: absolute; top: 0; height: 10px; }
+.barre-div-val.pos { background: var(--gain); border-radius: 0 4px 4px 0; }
+.barre-div-val.neg { background: var(--perte); border-radius: 4px 0 0 4px; }
+
+.jauge { height: 8px; border-radius: 4px; background: var(--surface-3); overflow: hidden; }
+.jauge > span { display: block; height: 100%; border-radius: 4px; background: var(--accent); }
+.jauge.gain > span { background: var(--gain); }
+.jauge.alerte > span { background: var(--alerte); }
+.jauge.perte > span { background: var(--perte); }

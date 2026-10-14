@@ -72,3 +72,12 @@ export async function lireJournal(url) {
 // Image PNG 1×1 valide.
 export const PNG_1PX = Buffer.from(
   'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==', 'base64');
+
+/** Remplace le journal sur le disque (pour préparer des données de test). */
+export async function ecrireJournal(url, journal) {
+  const { etag } = await (await fetch(`${url}/api/journal`)).json();
+  const r = await fetch(`${url}/api/journal`, {
+    method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ etagBase: etag, journal }),
+  });
+  if (!r.ok) throw new Error(`Écriture impossible : ${r.status}`);
+}
