@@ -96,7 +96,7 @@ p { margin: 0 0 8px; }
   font-family: var(--police-mono);
   font-variant-numeric: tabular-nums;
 }
-.police-notes { font-family: var(--police-notes); font-size: 15px; }
+.police-notes, .entree.police-notes { font-family: var(--police-notes); font-size: 15px; }
 
 /* --- En-tête --- */
 .entete {
@@ -195,9 +195,9 @@ input[type='checkbox'] { accent-color: var(--accent); width: 16px; height: 16px;
   min-height: 32px;
 }
 .seg:hover:not(:disabled) { color: var(--texte); border-color: var(--bordure-forte); }
-.seg.actif { background: var(--accent-doux); color: var(--accent-fort); border-color: var(--accent); }
-.seg.oui.actif { background: var(--gain-doux); color: var(--gain); border-color: var(--gain); }
-.seg.non.actif { background: var(--perte-doux); color: var(--perte); border-color: var(--perte); }
+.seg.actif, .seg.actif:hover:not(:disabled) { background: var(--accent-doux); color: var(--accent-fort); border-color: var(--accent); }
+.seg.oui.actif, .seg.oui.actif:hover:not(:disabled) { background: var(--gain-doux); color: var(--gain); border-color: var(--gain); }
+.seg.non.actif, .seg.non.actif:hover:not(:disabled) { background: var(--perte-doux); color: var(--perte); border-color: var(--perte); }
 .seg:disabled { opacity: 0.5; cursor: not-allowed; }
 
 /* --- Boutons --- */
@@ -376,3 +376,8 @@ table.tableau { width: 100%; border-collapse: collapse; font-size: 13px; }
 @media print {
   .entete, #bandeau { display: none; }
 }
+
+/* --- Sessions --- */
+.galerie { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+.galerie .photo { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.segment.echelle .seg { min-width: 38px; font-family: var(--police-mono); }

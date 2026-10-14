@@ -37,11 +37,6 @@ export function afficher() {
   afficherBandeau();
 }
 
-export function naviguer(chemin) {
-  if (location.hash === `#${chemin}`) afficher();
-  else location.hash = chemin;
-}
-
 // --- Thème ---
 function appliquerTheme() {
   const clair = store.p.theme === 'clair';
